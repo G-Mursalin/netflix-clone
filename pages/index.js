@@ -1,4 +1,5 @@
 import Banner from "@/components/Banner/Banner";
+import Card from "@/components/Card/Card";
 import Head from "next/head";
 
 export default function Home() {
@@ -19,6 +20,9 @@ export default function Home() {
         imgUrl="/static/clifford.webp"
         videoId="215896"
       />
+      <Card imgUrl="/static/clifford.webp" size="large" />
+      <Card />
+      <Card imgUrl="/static/clifford.webp" size="small" />
     </>
   );
 }
