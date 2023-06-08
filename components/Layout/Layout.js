@@ -4,7 +4,7 @@ import NavBar from "../NavBar/NavBar";
 const Layout = ({ children }) => {
   return (
     <main>
-      <NavBar />
+      <NavBar userName="user@gmail.com" />
       {children}
     </main>
   );

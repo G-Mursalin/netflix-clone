@@ -10,7 +10,7 @@ const Banner = ({ title, subTitle, imgUrl, videoId }) => {
     router.push(`video/${videoId}`);
   };
   return (
-    <div className={styles.container}>
+    <section className={styles.container}>
       <div className={styles.leftWrapper}>
         <div className={styles.left}>
           <div className={styles.nseriesWrapper}>
@@ -39,7 +39,7 @@ const Banner = ({ title, subTitle, imgUrl, videoId }) => {
           backgroundImage: `url(${imgUrl}`,
         }}
       ></div>
-    </div>
+    </section>
   );
 };
 
