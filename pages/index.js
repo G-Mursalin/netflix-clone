@@ -1,8 +1,13 @@
 import Banner from "@/components/Banner/Banner";
 import Card from "@/components/Card/Card";
+import SectionCards from "@/components/Card/SectionCards";
 import Head from "next/head";
+import styles from "@/styles/Home.module.css";
+import { getData } from "@/lib/fetch";
 
 export default function Home() {
+  const data = getData();
+
   return (
     <>
       <Head>
@@ -20,9 +25,14 @@ export default function Home() {
         imgUrl="/static/clifford.webp"
         videoId="215896"
       />
-      <Card imgUrl="/static/clifford.webp" size="large" />
-      <Card />
-      <Card imgUrl="/static/clifford.webp" size="small" />
+
+      <div className={styles.sectionWrapper}>
+        <SectionCards title="Disney" size="large" videos={data} />
+      </div>
+
+      <div className={styles.sectionWrapper}>
+        <SectionCards title="Popular" size="medium" videos={data} />
+      </div>
     </>
   );
 }
