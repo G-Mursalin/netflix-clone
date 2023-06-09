@@ -141,7 +141,7 @@
       "etag": "nJPHGFpQRgq_ZgkzjISx-9HUU1o",
       "id": {
         "kind": "youtube#channel",
-        "channelId": "UCqcBvLZoL6kWMoNekD7iQPQ"
+        "videoId": "UCqcBvLZoL6kWMoNekD7iQPQ"
       },
       "snippet": {
         "publishedAt": "2021-03-11T13:39:51Z",

@@ -5,9 +5,7 @@ import Head from "next/head";
 import styles from "@/styles/Home.module.css";
 import { getData } from "@/lib/fetch";
 
-export default function Home() {
-  const data = getData();
-
+export default function Home({ data }) {
   return (
     <>
       <Head>
@@ -35,4 +33,14 @@ export default function Home() {
       </div>
     </>
   );
+}
+
+export async function getServerSideProps() {
+  const data = getData();
+
+  return {
+    props: {
+      data,
+    },
+  };
 }
