@@ -3,9 +3,14 @@ import Card from "@/components/Card/Card";
 import SectionCards from "@/components/Card/SectionCards";
 import Head from "next/head";
 import styles from "@/styles/Home.module.css";
-import { getData } from "@/lib/fetch";
+import { getData } from "@/lib/fetchVideosData";
 
-export default function Home({ data }) {
+export default function Home({
+  disneyVideos,
+  travelVideos,
+  productivityVideos,
+  popularVideos,
+}) {
   return (
     <>
       <Head>
@@ -25,22 +30,42 @@ export default function Home({ data }) {
       />
 
       <div className={styles.sectionWrapper}>
-        <SectionCards title="Disney" size="large" videos={data} />
+        <SectionCards title="Disney" size="large" videos={disneyVideos} />
       </div>
 
       <div className={styles.sectionWrapper}>
-        <SectionCards title="Popular" size="medium" videos={data} />
+        <SectionCards title="Travel" size="small" videos={travelVideos} />
+      </div>
+
+      <div className={styles.sectionWrapper}>
+        <SectionCards
+          title="Productivity"
+          size="medium"
+          videos={productivityVideos}
+        />
+      </div>
+
+      <div className={styles.sectionWrapper}>
+        <SectionCards title="Popular" size="small" videos={popularVideos} />
       </div>
     </>
   );
 }
 
+// Serverside Rendering (SSR)
+
 export async function getServerSideProps() {
-  const data = getData();
+  const disneyVideos = await getData("disney trailer");
+  const travelVideos = await getData("travel");
+  const productivityVideos = await getData("productivity");
+  const popularVideos = await getData("popular");
 
   return {
     props: {
-      data,
+      disneyVideos,
+      travelVideos,
+      productivityVideos,
+      popularVideos,
     },
   };
 }
