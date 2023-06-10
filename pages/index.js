@@ -3,7 +3,7 @@ import Card from "@/components/Card/Card";
 import SectionCards from "@/components/Card/SectionCards";
 import Head from "next/head";
 import styles from "@/styles/Home.module.css";
-import { getData } from "@/lib/fetchVideosData";
+import { getData, getPopularVideos } from "@/lib/fetchVideosData";
 
 export default function Home({
   disneyVideos,
@@ -58,7 +58,7 @@ export async function getServerSideProps() {
   const disneyVideos = await getData("disney trailer");
   const travelVideos = await getData("travel");
   const productivityVideos = await getData("productivity");
-  const popularVideos = await getData("popular");
+  const popularVideos = await getPopularVideos();
 
   return {
     props: {
