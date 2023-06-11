@@ -49,7 +49,7 @@
   font-size: 1.2rem;
 }
 
-.userMsg {
+.error {
   margin-top: 0.25rem /* 4px */;
   margin-bottom: 0.25rem /* 4px */;
   color: var(--white20);
