@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styles from "./Login.module.css";
 import { useRouter } from "next/router";
 import { magic } from "@/lib/magicClient";
@@ -18,7 +18,7 @@ const Login = () => {
   //Handle SignIn
   const handleSignIn = async (e) => {
     e.preventDefault();
-
+    setIsLoading(true);
     try {
       // Validate Email
       if (
@@ -28,6 +28,7 @@ const Login = () => {
         )
       ) {
         setError("Enter a valid email address");
+        setIsLoading(false);
         return;
       }
       // Send Magic Link to Email
@@ -43,9 +44,23 @@ const Login = () => {
     } catch (err) {
       console.log("Fail to login", err);
     }
-
-    //
   };
+
+  //Listening for the route changed or error then loading to false
+  useEffect(() => {
+    const handleRouteChange = () => {
+      setIsLoading(false);
+    };
+
+    router.events.on("routeChangeComplete", handleRouteChange);
+    router.events.on("routeChangeError", handleRouteChange);
+
+    return () => {
+      router.events.off("routeChangeComplete", handleRouteChange);
+      router.events.off("routeChangeError", handleRouteChange);
+    };
+  }, [router]);
+
   return (
     <div className={styles.main}>
       <form onSubmit={handleSignIn} className={styles.mainWrapper}>

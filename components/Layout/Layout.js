@@ -5,7 +5,7 @@ import styles from "./Layout.module.css";
 const Layout = ({ children }) => {
   return (
     <main className={styles.main}>
-      <NavBar userName="user@gmail.com" />
+      <NavBar />
       {children}
     </main>
   );

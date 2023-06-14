@@ -1,5 +1,4 @@
 import Login from "@/components/Login/Login";
-import { magic } from "@/lib/magicClient";
 import Head from "next/head";
 
 const index = () => {
