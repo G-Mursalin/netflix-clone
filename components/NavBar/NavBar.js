@@ -1,18 +1,23 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import styles from "./NavBar.module.css";
 import Link from "next/link";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import { magic } from "@/lib/magicClient";
-import useLogin from "@/hooks/useLogin";
+import { UserContext } from "@/context/UserContext";
 
 const NavBar = () => {
   const [showDropdown, setShowDropdown] = useState(false);
-  const [userEmail, setUserEmail] = useState("");
-  const [isLoading] = useLogin();
   const router = useRouter();
+  const {
+    user,
+    isUserLogin,
+    setUser,
+    setIsUserLogin,
+    getUserData,
+    userSignOut,
+  } = useContext(UserContext);
 
-  console.log(isLoading);
   // Handle Home and My List
   const handleOnclickHome = () => {
     router.push("/");
@@ -29,25 +34,13 @@ const NavBar = () => {
   // Handle Sign Out
   const handleSignOut = async () => {
     try {
-      await magic.user.logout();
-      setUserEmail(null);
+      userSignOut();
+      setUser(null);
+      setIsUserLogin(false);
     } catch (err) {
       console.log(err.message);
     }
   };
-
-  // Get user data from signin user
-  useEffect(() => {
-    const getUserData = async () => {
-      try {
-        const { email } = await magic.user.getMetadata();
-        console.log("From NavBar*********", email);
-        setUserEmail(email);
-      } catch (err) {}
-    };
-
-    getUserData();
-  }, []);
 
   return (
     <nav className={styles.container}>
@@ -63,7 +56,7 @@ const NavBar = () => {
           </div>
         </Link>
 
-        {isLoading && (
+        {isUserLogin && (
           <ul className={styles.navItems}>
             <li className={styles.navItem} onClick={handleOnclickHome}>
               Home
@@ -73,14 +66,14 @@ const NavBar = () => {
             </li>
           </ul>
         )}
-        {isLoading && (
+        {isUserLogin && (
           <div className={styles.navContainer}>
             <div>
               <button
                 className={styles.usernameBtn}
                 onClick={handleShowDropdown}
               >
-                <p className={styles.username}>{userEmail}</p>
+                <p className={styles.username}>{user?.email}</p>
                 <Image
                   src={"/static/expand_more.svg"}
                   alt="Expand dropdown"

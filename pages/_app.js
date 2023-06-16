@@ -1,5 +1,6 @@
 import Layout from "@/components/Layout/Layout";
 import Loading from "@/components/Loading/Loading";
+import UserContextProvider from "@/context/UserContext";
 import { magic } from "@/lib/magicClient";
 import "@/styles/globals.css";
 import { useRouter } from "next/router";
@@ -13,16 +14,12 @@ export default function App({ Component, pageProps }) {
     // Check If is logged in or not
     (async () => {
       try {
-        const isLogin = await magic.user.isLoggedIn();
-        if (isLogin) {
+        if (await magic.user.isLoggedIn()) {
           router.push("/");
         } else {
           router.push("/login");
         }
-      } catch (error) {
-        // setIsLoading(false);
-        // router.push("/login");
-      }
+      } catch (error) {}
     })();
   }, []);
 
@@ -44,8 +41,10 @@ export default function App({ Component, pageProps }) {
   return isLoading ? (
     <Loading />
   ) : (
-    <Layout>
-      <Component {...pageProps} />
-    </Layout>
+    <UserContextProvider>
+      <Layout>
+        <Component {...pageProps} />
+      </Layout>
+    </UserContextProvider>
   );
 }

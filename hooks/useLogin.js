@@ -8,7 +8,6 @@ const useLogin = () => {
     (async () => {
       try {
         setIsLogin(await magic.user.isLoggedIn());
-        console.log("from Hook", await magic.user.isLoggedIn());
       } catch (error) {
         setIsLogin(false);
       }

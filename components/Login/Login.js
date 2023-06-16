@@ -1,13 +1,16 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import styles from "./Login.module.css";
 import { useRouter } from "next/router";
 import { magic } from "@/lib/magicClient";
+import { UserContext } from "@/context/UserContext";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
   const router = useRouter();
+  const { getDidToken, getUserData, getUserIsLoggedIn } =
+    useContext(UserContext);
 
   // Read Email from Input Field
   const handleEnteredEmail = (e) => {
@@ -31,14 +34,13 @@ const Login = () => {
         setIsLoading(false);
         return;
       }
-      // Send Magic Link to Email
-      // Log in a user by their email
-      const didToken = await magic.auth.loginWithMagicLink({
-        email,
-      });
+      // Send Magic Link to Email and Log in a user by their email
+      const didToken = await getDidToken(email);
       // Redirect the user If Successfully Get Token
       if (didToken) {
         console.log({ didToken });
+        getUserData();
+        getUserIsLoggedIn();
         router.push("/");
       }
     } catch (err) {
