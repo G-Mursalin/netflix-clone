@@ -38,7 +38,6 @@ const Login = () => {
       const didToken = await getDidToken(email);
       // Redirect the user If Successfully Get Token
       if (didToken) {
-        console.log({ didToken });
         getUserData();
         getUserIsLoggedIn();
         router.push("/");

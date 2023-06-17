@@ -7,7 +7,7 @@ import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 
 export default function App({ Component, pageProps }) {
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
 
   useEffect(() => {
@@ -15,9 +15,9 @@ export default function App({ Component, pageProps }) {
     (async () => {
       try {
         if (await magic.user.isLoggedIn()) {
-          router.push("/");
+          // router.push("/");
         } else {
-          router.push("/login");
+          // router.push("/login");
         }
       } catch (error) {}
     })();
