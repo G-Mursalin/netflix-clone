@@ -1,5 +1,6 @@
 import { useRouter } from "next/router";
 import VideoDetails from "@/components/VideoDetails/VideoDetails";
+import { getVideoById } from "@/lib/fetchVideosData";
 
 const Video = ({ videoData }) => {
   const router = useRouter();
@@ -9,19 +10,12 @@ const Video = ({ videoData }) => {
 };
 
 //Incremental Static Regeneration (ISR)
-export async function getStaticProps() {
-  const videoData = {
-    title: "Hi there",
-    publishTime: "1998-01-02",
-    description:
-      "lorm kifu ffigof offogfig mdjugjjf akfaiorioqpfo afkgafgqokfgoj fdlkgjfdskjg sflgjlsdfgksn ndsofgk orm kifu ffigof offogfig mdjugjjf akfaiorioqpfo  ",
-    channelTitle: "XX-RR-023",
-    viewCount: 230,
-  };
+export async function getStaticProps(context) {
+  const videoData = await getVideoById(context.params.videoId);
 
   return {
     props: {
-      videoData,
+      videoData: videoData[0],
     },
     revalidate: 10,
   };
