@@ -4,6 +4,7 @@ import SectionCards from "@/components/Card/SectionCards";
 import Head from "next/head";
 import styles from "@/styles/Home.module.css";
 import { getData, getPopularVideos } from "@/lib/fetchVideosData";
+import { startFetchMyQuery } from "@/lib/db/hasura";
 
 export default function Home({
   disneyVideos,
@@ -11,6 +12,8 @@ export default function Home({
   productivityVideos,
   popularVideos,
 }) {
+  startFetchMyQuery();
+
   return (
     <>
       <Head>
@@ -55,17 +58,17 @@ export default function Home({
 // Serverside Rendering (SSR)
 
 export async function getServerSideProps() {
-  const disneyVideos = await getData("disney trailer");
-  const travelVideos = await getData("travel");
-  const productivityVideos = await getData("productivity");
-  const popularVideos = await getPopularVideos();
+  // const disneyVideos = await getData("disney trailer");
+  // const travelVideos = await getData("travel");
+  // const productivityVideos = await getData("productivity");
+  // const popularVideos = await getPopularVideos();
 
   return {
     props: {
-      disneyVideos,
-      travelVideos,
-      productivityVideos,
-      popularVideos,
+      disneyVideos: [],
+      travelVideos: [],
+      productivityVideos: [],
+      popularVideos: [],
     },
   };
 }
